@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All projects of organization</title>
+</head>
+<body>
+    <h1>Project list</h1>
+    <ul>
+        {% for project in info.projects %}
+        <li><a href="/{{ info.projects_urls.get(project) }}">{{ project }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
