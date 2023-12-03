@@ -25,6 +25,7 @@ for project in list_of_projects():
     info['projects_urls'][project] = "/" + project
 
 if not os.path.exists('build_output'):
+    print('Creating build_output folder...')
     os.mkdir('build_output')
 else:
     for file in os.listdir('build_output'):
