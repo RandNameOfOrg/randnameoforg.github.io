@@ -24,8 +24,11 @@ for project in list_of_projects():
     info['projects'].append(project); 
     info['projects_urls'][project] = "/" + project
 
-for file in os.listdir('build_output'):
-    os.remove(f'build_output\\{file}')
+if not os.path.exists('build_output'):
+    os.mkdir('build_output')
+else:
+    for file in os.listdir('build_output'):
+        os.remove(f'build_output\\{file}')
 
 for _, _, files in os.walk('templates'):
     for file in files: 
