@@ -158,3 +158,4 @@ cython_debug/
 # other
 tests
 ignore.*
+build_output/*
