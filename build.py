@@ -2,6 +2,8 @@ from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
 import os
 import github
 
+output_folder = '/output/'
+
 env = Environment(loader=FileSystemLoader('templates'),
     autoescape=select_autoescape(['html', 'xml'])
 )
@@ -24,13 +26,13 @@ for project in list_of_projects():
     info['projects'].append(project); 
     info['projects_urls'][project] = "/" + project
 
-if not os.path.exists('build_output'):
-    print('Creating build_output folder...')
-    os.mkdir('build_output')
+if not os.path.exists(output_folder):
+    print('Creating output folder...')
+    os.mkdir(output_folder)
 else:
     for file in os.listdir('build_output'):
-        os.remove(f'build_output/{file}')
+        os.remove(f'{output_folder}{file}')
 
 for _, _, files in os.walk('templates'):
     for file in files: 
-        rendered = env.get_template(file).stream(info=info).dump(f'build_output\\{file}')
+        env.get_template(file).stream(info=info).dump(f'{output_folder}{file}')
