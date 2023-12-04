@@ -34,12 +34,12 @@ jobs:
       - name: Build HTML
         run: |
           python build.py
-      - name: Commit and push
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          author_name: builder
-          message: "Update HTML"
+      # - name: Commit and push
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     author_name: builder
+      #     message: "Update HTML"
 
   build:
     runs-on: ubuntu-latest
