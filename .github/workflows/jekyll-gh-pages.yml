@@ -20,8 +20,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@master
-      - if: 'Delete' in ${{ github.event.workflow_run.head_commit.message }}
-        run: exit 0
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -37,7 +35,7 @@ jobs:
       - name: Build HTML
         run: |
           sudo mkdir -p output
-          sudo python build.py
+          sudo python build.py---------
       - name: Commit and push
         uses: actions-js/push@master
         with:
