@@ -154,6 +154,7 @@ cython_debug/
 
 # VS code
 .vscode
+.idea
 
 # other
 tests
