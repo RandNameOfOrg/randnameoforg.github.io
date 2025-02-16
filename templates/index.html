@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All projects of organization</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% set title = "All projects of organization" %}
+
+{% block content %}
+<div class="project_list">
     <h1>Project list</h1>
     <ul>
         {% for project in info.projects %}
@@ -14,5 +12,5 @@
         </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+{% endblock %}

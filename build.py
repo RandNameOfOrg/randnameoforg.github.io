@@ -3,6 +3,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import os
 import github
+import shutil
 
 output_folder = Path('build_output').absolute()
 env = Environment(loader=FileSystemLoader('templates'),
@@ -40,8 +41,16 @@ for dirpath, dirnames, filenames in os.walk(output_folder):
         os.remove(dirpath + "\\" + fn)
     for dirs in dirnames:
         if dirs != ".well-known":
-            os.removedirs(dirpath + "\\" + dirs)
+            shutil.rmtree(dirpath + "\\" + dirs)
 
 for _, _, files in os.walk('templates'):
     for file in files:
         env.get_template(file).stream(info=info).dump(f'{output_folder}\\{file}')
+
+# copy static files
+if not os.path.exists(output_folder / "static"):
+    os.mkdir(output_folder / "static")
+
+for dirpath, dirnames, filenames in os.walk(Path('static').absolute()):
+    for fn in filenames:
+        shutil.copyfile(dirpath + "\\" + fn, str(output_folder) + "\\static\\" + fn)

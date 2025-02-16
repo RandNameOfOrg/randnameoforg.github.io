@@ -1,0 +1,52 @@
+
+:root {
+    --header-bg-color: #837c7c;
+    --main-bg-color: #bababa;
+    --text-color: linear-gradient(to right, #fb2023, #3c53ec);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a { color: inherit; }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+    color: var(--text-color);
+
+    background-color: var(--main-bg-color);
+}
+
+header {
+    background-color: var(--header-bg-color);
+    padding: 10px;
+    border-radius: 1px;
+    border: black;
+}
+
+main {
+    background-color: var(--main-bg-color);
+    padding: 10px;
+}
+
+footer {
+    position: fixed;
+    background-color: var(--header-bg-color);
+    color: white;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    text-align: center;
+    padding: min(13px, 5vh);
+}
+
+.project_list {
+    border: black;
+    border-radius: 5px;
+}
