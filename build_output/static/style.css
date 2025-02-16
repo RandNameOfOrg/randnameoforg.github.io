@@ -50,5 +50,7 @@ footer {
     border: black;
     border-radius: 5px;
     justify-content: center;
-
+    ol li {
+        list-style-type: none;
+    }
 }
