@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import os
 import github
 
-output_folder = 'build_output'
+output_folder = Path('build_output').absolute()
 env = Environment(loader=FileSystemLoader('templates'),
                   autoescape=select_autoescape(['html', 'xml'])
                   )
@@ -10,6 +12,7 @@ env = Environment(loader=FileSystemLoader('templates'),
 gh = github.Github()
 
 info = {
+    "base_url": "https://github.com/RandNameOfOrg",
     'projects': [], 'projects_urls': {}
 }
 
@@ -29,9 +32,15 @@ for project in list_of_projects():
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
-for file in os.listdir(f'{output_folder}\\'):
-    if os.path.isfile(f'{output_folder}\\{file}'):
-        os.remove(f'{output_folder}\\{file}')
+
+for dirpath, dirnames, filenames in os.walk(output_folder):
+    if ".well-known" in dirpath:
+        continue
+    for fn in filenames:
+        os.remove(dirpath + "\\" + fn)
+    for dirs in dirnames:
+        if dirs != ".well-known":
+            os.removedirs(dirpath + "\\" + dirs)
 
 for _, _, files in os.walk('templates'):
     for file in files:

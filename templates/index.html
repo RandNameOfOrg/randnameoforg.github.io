@@ -9,7 +9,9 @@
     <h1>Project list</h1>
     <ul>
         {% for project in info.projects %}
-        <li><a href="/{{ info.projects_urls.get(project) }}">{{ project }}</a></li>
+        <li>
+            <a href="{{ info.base_url }}{{ info.projects_urls.get(project) }}">{{ project }}</a>
+        </li>
         {% endfor %}
     </ul>
 </body>
