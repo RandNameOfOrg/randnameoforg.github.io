@@ -33,6 +33,7 @@ jobs:
       - name: Build HTML
         run: |
           make build
+          git add .
       - name: Commit and push
         uses: actions-js/push@master
         with:
