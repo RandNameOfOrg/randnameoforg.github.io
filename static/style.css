@@ -49,4 +49,6 @@ footer {
 .project_list {
     border: black;
     border-radius: 5px;
+    justify-content: center;
+
 }
