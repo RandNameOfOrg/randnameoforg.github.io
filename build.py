@@ -36,7 +36,7 @@ def main():
 
     for dirpath, dirnames, filenames in os.walk(output_folder):
         dirpath = Path(dirpath)
-        if ".well-known" in dirpath:
+        if ".well-known" in str(dirpath):
             continue
         try:
             for fn in filenames:
@@ -62,11 +62,11 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
+    # try:
         main()
-    except KeyboardInterrupt:
-        exit(0)
-    except Exception as e:
-        print(e)
-        exit(-1)
+    # except KeyboardInterrupt:
+    #     exit(0)
+    # except Exception as e:
+    #     print(e)
+    #     exit(-1)
     
