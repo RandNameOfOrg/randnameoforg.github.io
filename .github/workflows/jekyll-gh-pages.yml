@@ -30,13 +30,8 @@ jobs:
       - name: Install dependencies
         run: |
           make package_install
-      #         sudo python -m pip install --upgrade pip
-      #         sudo pip install jinja2
-      #         sudo python3 -m pip install --upgrade PyGithub
       - name: Build HTML
         run: |
-#         sudo mkdir -p build_output
-#         sudo python build.py --output=build_output
           make build
       - name: Commit and push
         uses: actions-js/push@master
