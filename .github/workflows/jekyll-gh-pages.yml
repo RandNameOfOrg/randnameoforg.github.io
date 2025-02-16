@@ -25,14 +25,14 @@ jobs:
           fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v3
-#        with:
-#          python-version: '3.11'
+        with:
+          python-version: '3.11'
       - name: Install dependencies
         run: |
-#         sudo python -m pip install --upgrade pip
-#         sudo pip install jinja2
-#         sudo python3 -m pip install --upgrade PyGithub
           make package_install
+      #         sudo python -m pip install --upgrade pip
+      #         sudo pip install jinja2
+      #         sudo python3 -m pip install --upgrade PyGithub
       - name: Build HTML
         run: |
 #         sudo mkdir -p build_output
