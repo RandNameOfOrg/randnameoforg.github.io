@@ -33,13 +33,13 @@ jobs:
       - name: Build HTML
         run: |
           make build
-          git add .
       - name: Commit and push
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           author_name: builder
           message: "Update HTML"
+          directory: "build_output"
 
   deploy:
     environment:
