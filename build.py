@@ -49,7 +49,7 @@ def main():
 
     for _, _, files in os.walk('templates'):
         for file in files:
-            env.get_template(file).stream(info=info).dump(f'{output_folder}\\{file}')
+            env.get_template(file).stream(info=info).dump(str(output_folder / file))
 
     # copy static files
     if not os.path.exists(output_folder / "static"):
@@ -58,7 +58,7 @@ def main():
     for dirpath, dirnames, filenames in os.walk(Path('static').absolute()):
         dirpath = Path(dirpath)
         for fn in filenames:
-            shutil.copyfile(dirpath / fn, str(output_folder) + "\\static\\" + fn)
+            shutil.copyfile(dirpath / fn, str(output_folder / "static" / fn))
 
 
 if __name__ == "__main__":
