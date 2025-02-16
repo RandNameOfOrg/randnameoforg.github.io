@@ -1,9 +1,9 @@
+import os
+import shutil
 from pathlib import Path
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-import os
 import github
-import shutil
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 output_folder = Path('build_output').absolute()
 env = Environment(loader=FileSystemLoader('templates'),
@@ -26,35 +26,47 @@ def list_of_projects() -> list:
             non_forks.append(repo.name)
     return non_forks
 
+def main():
+    for project in list_of_projects():
+        info['projects'].append(project)
+        info['projects_urls'][project] = "/" + project
 
-for project in list_of_projects():
-    info['projects'].append(project)
-    info['projects_urls'][project] = "/" + project
+    if not os.path.exists(output_folder):
+        os.mkdir(output_folder)
 
-if not os.path.exists(output_folder):
-    os.mkdir(output_folder)
+    for dirpath, dirnames, filenames in os.walk(output_folder):
+        dirpath = Path(dirpath)
+        if ".well-known" in dirpath:
+            continue
+        try:
+            for fn in filenames:
+                os.remove(dirpath / fn)
+            for dirs in dirnames:
+                if dirs != ".well-known":
+                    shutil.rmtree(dirpath / dirs)
+        except FileNotFoundError:
+            continue
 
-for dirpath, dirnames, filenames in os.walk(output_folder):
-    dirpath = Path(dirpath)
-    if ".well-known" in dirpath:
-        continue
-    try:
+    for _, _, files in os.walk('templates'):
+        for file in files:
+            env.get_template(file).stream(info=info).dump(f'{output_folder}\\{file}')
+
+    # copy static files
+    if not os.path.exists(output_folder / "static"):
+        os.mkdir(output_folder / "static")
+
+    for dirpath, dirnames, filenames in os.walk(Path('static').absolute()):
+        dirpath = Path(dirpath)
         for fn in filenames:
-            os.remove(dirpath / fn)
-        for dirs in dirnames:
-            if dirs != ".well-known":
-                shutil.rmtree(dirpath / dirs)
-    except FileNotFoundError:
-        continue
+            shutil.copyfile(dirpath / fn, str(output_folder) + "\\static\\" + fn)
 
-for _, _, files in os.walk('templates'):
-    for file in files:
-        env.get_template(file).stream(info=info).dump(f'{output_folder}\\{file}')
 
-# copy static files
-if not os.path.exists(output_folder / "static"):
-    os.mkdir(output_folder / "static")
-
-for dirpath, dirnames, filenames in os.walk(Path('static').absolute()):
-    for fn in filenames:
-        shutil.copyfile(dirpath + "\\" + fn, str(output_folder) + "\\static\\" + fn)
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit(0)
+    except Exception as e:
+        print(e)
+        exit(-1)
+    
