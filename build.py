@@ -35,13 +35,17 @@ if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 
 for dirpath, dirnames, filenames in os.walk(output_folder):
+    dirpath = Path(dirpath)
     if ".well-known" in dirpath:
         continue
-    for fn in filenames:
-        os.remove(dirpath + "\\" + fn)
-    for dirs in dirnames:
-        if dirs != ".well-known":
-            shutil.rmtree(dirpath + "\\" + dirs)
+    try:
+        for fn in filenames:
+            os.remove(dirpath / fn)
+        for dirs in dirnames:
+            if dirs != ".well-known":
+                shutil.rmtree(dirpath / dirs)
+    except FileNotFoundError:
+        continue
 
 for _, _, files in os.walk('templates'):
     for file in files:
